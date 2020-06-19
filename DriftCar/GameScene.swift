@@ -56,18 +56,16 @@ class GameScene: SKScene {
         
     }
     
-    
     func touchDown(atPoint pos : CGPoint) {
-        car.action_value = -pos.x/300
-        
+        car.turn(turn: -pos.x/300)
     }
     
     func touchMoved(toPoint pos : CGPoint) {
-        car.action_value = -pos.x/300
+       car.turn(turn: -pos.x/300)
     }
     
     func touchUp(atPoint pos : CGPoint) {
-        car.action_value = 0
+        car.turn(turn: 0)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
