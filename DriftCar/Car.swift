@@ -74,6 +74,9 @@ public class Car: SKSpriteNode{
     func proj(u: CGVector, v: CGVector) -> CGVector{
         return(vecc(v: v, c: dot(v1: u, v2: v)/pow(mag(v: v),2)))
     }
+    func dist(p1: CGPoint, p2: CGPoint) -> CGFloat{
+        return(sqrt((p1.x - p2.x) * (p1.x - p2.x) + (p1.y - p2.y) * (p1.y - p2.y)))
+    }
     
     func step(scene: GameScene, currentTime: TimeInterval, pastTime: TimeInterval){
         let force: CGFloat = 5000
@@ -93,6 +96,36 @@ public class Car: SKSpriteNode{
         shadow.position = CGPoint(x: self.position.x+3,y: self.position.y+3)
         shadow.zRotation = self.zRotation
         scene.cameraNode.zRotation = angle
+        
+        for bridge in scene.map.bridges{
+            
+            if dist(p1: self.position,p2: bridge.0)<350{
+                print(position.x-bridge.0.x)
+                let dist: CGFloat = 200
+                let inx = position.x<bridge.0.x+dist && position.x>bridge.0.x-dist
+                let iny = position.y<bridge.0.y+dist && position.y>bridge.0.y-dist
+                print(inx,iny)
+                if inx && !iny{
+                    if bridge.1{
+                        zPosition = 3
+                    }
+                    else{
+                        zPosition = 1
+                    }
+                }
+                if !inx && iny{
+                    if bridge.1{
+                        zPosition = 1
+                    }
+                    else{
+                        zPosition = 3
+                    }
+                }
+            }
+            else{
+                zPosition = 2
+            }
+        }
     }
     
 
