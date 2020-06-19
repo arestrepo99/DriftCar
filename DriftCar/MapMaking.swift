@@ -14,6 +14,7 @@ class Map{
     
     private var current_point: CGPoint = CGPoint(x:0,y:0)
     private var road_direction: String = "n"
+    private var mapsize = 5
     
     let turns: [String]
     let graphics: [String]
@@ -27,6 +28,14 @@ class Map{
     func render(gameScene: GameScene){
         for turn in turns{
             plot(turn: turn, gameScene: gameScene)
+        }
+        for i in -mapsize...mapsize{
+            for j in -mapsize...mapsize{
+                let backgroundtile = SKSpriteNode(imageNamed: "Background")
+                backgroundtile.position = CGPoint(x: 500*i, y: 500*j)
+                backgroundtile.zPosition = -5
+                gameScene.addChild(backgroundtile)
+            }
         }
     }
     func plot(turn: String, gameScene: GameScene)  {

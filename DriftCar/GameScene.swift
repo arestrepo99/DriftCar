@@ -36,14 +36,6 @@ class GameScene: SKScene {
     
     override func didMove(to view: SKView) {
         self.backgroundColor = SKColor(cgColor: CGColor(srgbRed: 12/355, green: 242/355, blue: 22/355, alpha: 1))
-        for i in -20...20{
-            for j in -20...20{
-                let backgroundtile = SKSpriteNode(imageNamed: "Background")
-                backgroundtile.position = CGPoint(x: 500*i, y: 500*j)
-                backgroundtile.zPosition = -5
-                self.addChild(backgroundtile)
-            }
-        }
         self.addChild(cameraNode)
         self.camera = cameraNode
         car.zPosition = 1
