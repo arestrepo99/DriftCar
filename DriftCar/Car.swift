@@ -25,12 +25,12 @@ public class Car: SKSpriteNode{
         self.phisicsBody.angularDamping = 0.1
         let texture = SKTexture(imageNamed: "car")
         shadow = SKSpriteNode(imageNamed: "car_shadow")
-        shadow.zPosition = 9
+        shadow.zPosition = 1
         shadow.alpha = 0.3
         super.init(texture: texture, color: UIColor.clear, size: texture.size())
         super.physicsBody = self.phisicsBody
         self.zRotation = CGFloat.pi/2
-        self.zPosition = 10
+        self.zPosition = 2
     }
     
     required init?(coder aDecoder: NSCoder) {

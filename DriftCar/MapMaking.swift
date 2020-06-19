@@ -27,6 +27,7 @@ class Map{
     
     func render(gameScene: GameScene){
         for turn in turns{
+            print(turn,road_direction)
             plot(turn: turn, gameScene: gameScene)
         }
         for i in -mapsize...mapsize{
@@ -38,29 +39,42 @@ class Map{
             }
         }
     }
+    func plot_road(imageNamed: String, position: CGPoint, rotation: CGFloat, gameScene: GameScene){
+        let image = SKSpriteNode(imageNamed: imageNamed)
+        let shadow = SKSpriteNode(imageNamed: imageNamed+"_shadow")
+        let glow = SKSpriteNode(imageNamed: imageNamed+"_glow")
+        image.position  = position
+        image.zRotation = rotation
+        shadow.position = CGPoint(x: position.x+7,y: position.y+7)
+        shadow.zRotation = rotation
+        shadow.alpha = 0.3
+        glow.position = CGPoint(x: position.x-7,y: position.y-7)
+        glow.zRotation = rotation
+        shadow.zPosition = image.zPosition-0.5
+        glow.zPosition = image.zPosition-0.5
+        glow.alpha = 0.5
+        gameScene.addChild(image)
+        gameScene.addChild(shadow)
+        gameScene.addChild(glow)
+    }
+    
+    
     func plot(turn: String, gameScene: GameScene)  {
         let bloc_size: CGFloat = 500
         switch self.road_direction{
         case "n":
             switch turn{
             case "s":
-                let image = SKSpriteNode(imageNamed: "tarmac_straight")
-                image.position = current_point
-                gameScene.addChild(image)
+                plot_road(imageNamed: "tarmac_straight", position: current_point, rotation: 0, gameScene: gameScene)
                 current_point.y = current_point.y+bloc_size
                 road_direction = "n"
             case "r":
-                let image: SKSpriteNode = SKSpriteNode(imageNamed: "tarmac_right")
-                image.position = current_point
+                plot_road(imageNamed: "tarmac_right", position: current_point, rotation: 0, gameScene: gameScene)
                 current_point.x = current_point.x + bloc_size
-                gameScene.addChild(image)
                 road_direction = "e"
             case "l":
-                let image: SKSpriteNode = SKSpriteNode(imageNamed: "tarmac_left")
-                image.position = current_point
+                plot_road(imageNamed: "tarmac_left", position: current_point, rotation: 0, gameScene: gameScene)
                 current_point.x = current_point.x-bloc_size
-                current_point.y = current_point.y+bloc_size
-                gameScene.addChild(image)
                 road_direction = "w"
             default:
                 print("Error")
@@ -68,25 +82,16 @@ class Map{
         case "s":
             switch turn{
             case "s":
-                let image = SKSpriteNode(imageNamed: "tarmac_straight")
-                image.position = current_point
-                image.zRotation = CGFloat.pi
-                gameScene.addChild(image)
+                plot_road(imageNamed: "tarmac_straight", position: current_point, rotation:  CGFloat.pi, gameScene: gameScene)
                 current_point.y = current_point.y-bloc_size
                 road_direction = "s"
             case "r":
-                let image: SKSpriteNode = SKSpriteNode(imageNamed: "tarmac_right")
-                image.position = current_point
-                image.zRotation = CGFloat.pi
+                plot_road(imageNamed: "tarmac_right", position: current_point, rotation: CGFloat.pi, gameScene: gameScene)
                 current_point.x = current_point.x-bloc_size
-                gameScene.addChild(image)
                 road_direction = "w"
             case "l":
-                let image: SKSpriteNode = SKSpriteNode(imageNamed: "tarmac_left")
-                image.position = current_point
-                image.zRotation = CGFloat.pi
+                plot_road(imageNamed: "tarmac_left", position: current_point, rotation:  CGFloat.pi, gameScene: gameScene)
                 current_point.x = current_point.x+bloc_size
-                gameScene.addChild(image)
                 road_direction = "e"
             default:
                 print("Error")
@@ -94,25 +99,16 @@ class Map{
         case "e":
             switch turn{
             case "s":
-                let image = SKSpriteNode(imageNamed: "tarmac_straight")
-                image.position = current_point
-                image.zRotation = -CGFloat.pi/2
-                gameScene.addChild(image)
+                plot_road(imageNamed: "tarmac_straight", position: current_point, rotation:  -CGFloat.pi/2, gameScene: gameScene)
                 current_point.x = current_point.x+bloc_size
                 road_direction = "e"
             case "r":
-                let image: SKSpriteNode = SKSpriteNode(imageNamed: "tarmac_right")
-                image.position = current_point
-                image.zRotation = -CGFloat.pi/2
+                plot_road(imageNamed: "tarmac_right", position: current_point, rotation: -CGFloat.pi/2, gameScene: gameScene)
                 current_point.y = current_point.y-bloc_size
-                gameScene.addChild(image)
                 road_direction = "s"
             case "l":
-                let image: SKSpriteNode = SKSpriteNode(imageNamed: "tarmac_left")
-                image.position = current_point
-                image.zRotation = -CGFloat.pi/2
+                plot_road(imageNamed: "tarmac_left", position: current_point, rotation: -CGFloat.pi/2, gameScene: gameScene)
                 current_point.y = current_point.y+bloc_size
-                gameScene.addChild(image)
                 road_direction = "n"
             default:
                 print("Error")
@@ -120,26 +116,17 @@ class Map{
         case "w":
             switch turn{
             case "s":
-                let image = SKSpriteNode(imageNamed: "tarmac_straight")
-                image.position = current_point
-                image.zRotation = CGFloat.pi/2
-                gameScene.addChild(image)
+                plot_road(imageNamed: "tarmac_straight", position: current_point, rotation:  CGFloat.pi/2, gameScene: gameScene)
                 current_point.x = current_point.x-bloc_size
                 road_direction = "e"
             case "r":
-                let image: SKSpriteNode = SKSpriteNode(imageNamed: "tarmac_right")
-                image.position = current_point
-                image.zRotation = CGFloat.pi/2
+                plot_road(imageNamed: "tarmac_right", position: current_point, rotation: CGFloat.pi/2, gameScene: gameScene)
                 current_point.y = current_point.y+bloc_size
-                gameScene.addChild(image)
-                road_direction = "s"
-            case "l":
-                let image: SKSpriteNode = SKSpriteNode(imageNamed: "tarmac_left")
-                image.position = current_point
-                image.zRotation = CGFloat.pi/2
-                current_point.y = current_point.y-bloc_size
-                gameScene.addChild(image)
                 road_direction = "n"
+            case "l":
+                plot_road(imageNamed: "tarmac_left", position: current_point, rotation: CGFloat.pi/2, gameScene: gameScene)
+                current_point.y = current_point.y-bloc_size
+                road_direction = "s"
             default:
                 print("Error")
             }
