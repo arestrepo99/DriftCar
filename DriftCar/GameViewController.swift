@@ -15,7 +15,7 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         if let view = self.view as! SKView? {
-            let scene = GameScene(size: CGSize(width: 750, height: 1334), map: Map(turns: "ssrrrbs", graphics: []), car: Car())
+            let scene = GameScene(size: CGSize(width: 750, height: 1334), map: Map(turns: "ssrrrbssrsrssssslllblrrlsrsr", graphics: []), car: Car())
             // Load the SKScene from 'GameScene.sks'
             scene.scaleMode = .aspectFill
             view.presentScene(scene)

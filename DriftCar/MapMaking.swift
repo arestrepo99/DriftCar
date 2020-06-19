@@ -29,6 +29,7 @@ class Map{
     func render(gameScene: GameScene){
         for char in turns{
             let turn = String(char)
+            print(road_direction,turn)
             plot(turn: turn, gameScene: gameScene)
         }
         for i in -mapsize...mapsize{
@@ -141,12 +142,12 @@ class Map{
             case "s":
                 plot_road(imageNamed: "tarmac_straight", position: current_point, rotation:  CGFloat.pi/2, gameScene: gameScene, bridge: false)
                 current_point.x = current_point.x-bloc_size
-                road_direction = "e"
+                road_direction = "w"
             case "b":
                 plot_road(imageNamed: "tarmac_straight", position: current_point, rotation:  CGFloat.pi/2, gameScene: gameScene, bridge: true)
                 self.bridges.append((current_point,false))
                 current_point.x = current_point.x-bloc_size
-                road_direction = "e"
+                road_direction = "w"
             case "r":
                 plot_road(imageNamed: "tarmac_right", position: current_point, rotation: CGFloat.pi/2, gameScene: gameScene, bridge: false)
                 current_point.y = current_point.y+bloc_size
