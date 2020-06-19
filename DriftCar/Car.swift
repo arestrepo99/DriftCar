@@ -11,6 +11,8 @@ import Foundation
 public class Car: SKSpriteNode{
     
     private let phisicsBody: SKPhysicsBody
+    public let shadow: SKSpriteNode
+    
     
     init(){
         //self
@@ -20,11 +22,15 @@ public class Car: SKSpriteNode{
         self.phisicsBody.isDynamic = true
         self.phisicsBody.mass = 10
         self.phisicsBody.friction = 0.0
-        self.phisicsBody.angularDamping = 0.3
+        self.phisicsBody.angularDamping = 0.1
         let texture = SKTexture(imageNamed: "car")
+        shadow = SKSpriteNode(imageNamed: "car_shadow")
+        shadow.zPosition = 9
+        shadow.alpha = 0.3
         super.init(texture: texture, color: UIColor.clear, size: texture.size())
         super.physicsBody = self.phisicsBody
         self.zRotation = CGFloat.pi/2
+        self.zPosition = 10
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -84,6 +90,8 @@ public class Car: SKSpriteNode{
         if self.phisicsBody.velocity.dx>0{
             angle = -angle
         }
+        shadow.position = CGPoint(x: self.position.x+3,y: self.position.y+3)
+        shadow.zRotation = self.zRotation
         scene.cameraNode.zRotation = angle
     }
     

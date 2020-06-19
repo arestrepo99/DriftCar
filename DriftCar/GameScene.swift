@@ -38,8 +38,8 @@ class GameScene: SKScene {
         self.backgroundColor = SKColor(cgColor: CGColor(srgbRed: 12/355, green: 242/355, blue: 22/355, alpha: 1))
         self.addChild(cameraNode)
         self.camera = cameraNode
-        car.zPosition = 1
         self.addChild(car)
+        self.addChild(car.shadow)
         self.map.render(gameScene: self)
     }
     
