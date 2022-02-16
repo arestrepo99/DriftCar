@@ -16,16 +16,16 @@ public class Car: SKSpriteNode{
     
     init(){
         //self
-        self.phisicsBody = SKPhysicsBody(circleOfRadius:50)
+        let texture = SKTexture(imageNamed: "car")
+        shadow = SKSpriteNode(imageNamed: "car_shadow")
+        shadow.alpha = 0.3
+        self.phisicsBody = SKPhysicsBody(texture: texture, size: texture.size())
         self.phisicsBody.affectedByGravity = false
         self.phisicsBody.allowsRotation = true
         self.phisicsBody.isDynamic = true
         self.phisicsBody.mass = 10
         self.phisicsBody.friction = 0.0
         self.phisicsBody.angularDamping = 0.1
-        let texture = SKTexture(imageNamed: "car")
-        shadow = SKSpriteNode(imageNamed: "car_shadow")
-        shadow.alpha = 0.3
         super.init(texture: texture, color: UIColor.clear, size: texture.size())
         super.physicsBody = self.phisicsBody
         self.zRotation = CGFloat.pi/2
@@ -95,7 +95,7 @@ public class Car: SKSpriteNode{
         }
         shadow.position = CGPoint(x: self.position.x+3,y: self.position.y+3)
         shadow.zRotation = self.zRotation
-        scene.cameraNode.zRotation = angle
+        //scene.cameraNode.zRotation = angle
         
         for bridge in scene.map.bridges{
             

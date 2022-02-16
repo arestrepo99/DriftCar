@@ -29,7 +29,6 @@ class Map{
     func render(gameScene: GameScene){
         for char in turns{
             let turn = String(char)
-            print(road_direction,turn)
             plot(turn: turn, gameScene: gameScene)
         }
         for i in -mapsize...mapsize{
@@ -42,11 +41,11 @@ class Map{
         }
     }
     
-    func plot_road(imageNamed: String, position: CGPoint, rotation: CGFloat, gameScene: GameScene, bridge: Bool){
+    func plot_road(imageNamed: String, turn: String, position: CGPoint, rotation: CGFloat, gameScene: GameScene){
         let image = SKSpriteNode(imageNamed: imageNamed)
         image.position  = position
         image.zRotation = rotation
-        if bridge{
+        if turn=="b"{
             let shadow = SKSpriteNode(imageNamed: imageNamed+"_bridge_shadow")
             image.zPosition = 2
             shadow.zPosition = 1.5
@@ -62,11 +61,15 @@ class Map{
             shadow.alpha = 1
             shadow.zPosition = image.zPosition-0.5
             gameScene.addChild(shadow)
+            
+            //let phisicsBodyTexture = SKTexture(imageNamed: imageNamed+"_mask")
+            //image.physicsBody = SKPhysicsBody(texture: phisicsBodyTexture,
+            //size: phisicsBodyTexture.size())
+            //image.physicsBody?.isDynamic = false
         }
         gameScene.addChild(image)
 
     }
-    
     
     func plot(turn: String, gameScene: GameScene)  {
         let bloc_size: CGFloat = 500
@@ -74,20 +77,20 @@ class Map{
         case "n":
             switch turn{
             case "s":
-                plot_road(imageNamed: "tarmac_straight", position: current_point, rotation: 0, gameScene: gameScene, bridge: false)
+                plot_road(imageNamed: "tarmac_straight", turn: turn, position: current_point, rotation: 0, gameScene: gameScene)
                 current_point.y = current_point.y+bloc_size
                 road_direction = "n"
             case "b":
-                plot_road(imageNamed: "tarmac_straight", position: current_point, rotation: 0, gameScene: gameScene, bridge: true)
+                plot_road(imageNamed: "tarmac_straight", turn: turn, position: current_point, rotation: 0, gameScene: gameScene)
                 self.bridges.append((current_point,true))
                 current_point.y = current_point.y+bloc_size
                 road_direction = "n"
             case "r":
-                plot_road(imageNamed: "tarmac_right", position: current_point, rotation: 0, gameScene: gameScene, bridge: false)
+                plot_road(imageNamed: "tarmac_right", turn: turn, position: current_point, rotation: 0, gameScene: gameScene)
                 current_point.x = current_point.x + bloc_size
                 road_direction = "e"
             case "l":
-                plot_road(imageNamed: "tarmac_left", position: current_point, rotation: 0, gameScene: gameScene, bridge: false)
+                plot_road(imageNamed: "tarmac_left", turn: turn, position: current_point, rotation: 0, gameScene: gameScene)
                 current_point.x = current_point.x-bloc_size
                 road_direction = "w"
             default:
@@ -96,20 +99,20 @@ class Map{
         case "s":
             switch turn{
             case "s":
-                plot_road(imageNamed: "tarmac_straight", position: current_point, rotation:  CGFloat.pi, gameScene: gameScene, bridge: false)
+                plot_road(imageNamed: "tarmac_straight", turn: turn, position: current_point, rotation:  CGFloat.pi, gameScene: gameScene)
                 current_point.y = current_point.y-bloc_size
                 road_direction = "s"
             case "b":
-                plot_road(imageNamed: "tarmac_straight", position: current_point, rotation:  CGFloat.pi, gameScene: gameScene, bridge: true)
+                plot_road(imageNamed: "tarmac_straight", turn: turn, position: current_point, rotation:  CGFloat.pi, gameScene: gameScene)
                 self.bridges.append((current_point,true))
                 current_point.y = current_point.y-bloc_size
                 road_direction = "s"
             case "r":
-                plot_road(imageNamed: "tarmac_right", position: current_point, rotation: CGFloat.pi, gameScene: gameScene, bridge: false)
+                plot_road(imageNamed: "tarmac_right", turn: turn, position: current_point, rotation: CGFloat.pi, gameScene: gameScene)
                 current_point.x = current_point.x-bloc_size
                 road_direction = "w"
             case "l":
-                plot_road(imageNamed: "tarmac_left", position: current_point, rotation:  CGFloat.pi, gameScene: gameScene, bridge: false)
+                plot_road(imageNamed: "tarmac_left", turn: turn, position: current_point, rotation:  CGFloat.pi, gameScene: gameScene)
                 current_point.x = current_point.x+bloc_size
                 road_direction = "e"
             default:
@@ -118,20 +121,20 @@ class Map{
         case "e":
             switch turn{
             case "s":
-                plot_road(imageNamed: "tarmac_straight", position: current_point, rotation:  -CGFloat.pi/2, gameScene: gameScene, bridge: false)
+                plot_road(imageNamed: "tarmac_straight", turn: turn, position: current_point, rotation:  -CGFloat.pi/2, gameScene: gameScene)
                 current_point.x = current_point.x+bloc_size
                 road_direction = "e"
             case "b":
-                plot_road(imageNamed: "tarmac_straight", position: current_point, rotation:  -CGFloat.pi/2, gameScene: gameScene, bridge: true)
+                plot_road(imageNamed: "tarmac_straight", turn: turn, position: current_point, rotation:  -CGFloat.pi/2, gameScene: gameScene)
                 self.bridges.append((current_point,false))
                 current_point.x = current_point.x+bloc_size
                 road_direction = "e"
             case "r":
-                plot_road(imageNamed: "tarmac_right", position: current_point, rotation: -CGFloat.pi/2, gameScene: gameScene, bridge: false)
+                plot_road(imageNamed: "tarmac_right", turn: turn, position: current_point, rotation: -CGFloat.pi/2, gameScene: gameScene)
                 current_point.y = current_point.y-bloc_size
                 road_direction = "s"
             case "l":
-                plot_road(imageNamed: "tarmac_left", position: current_point, rotation: -CGFloat.pi/2, gameScene: gameScene, bridge: false)
+                plot_road(imageNamed: "tarmac_left", turn: turn, position: current_point, rotation: -CGFloat.pi/2, gameScene: gameScene)
                 current_point.y = current_point.y+bloc_size
                 road_direction = "n"
             default:
@@ -140,20 +143,20 @@ class Map{
         case "w":
             switch turn{
             case "s":
-                plot_road(imageNamed: "tarmac_straight", position: current_point, rotation:  CGFloat.pi/2, gameScene: gameScene, bridge: false)
+                plot_road(imageNamed: "tarmac_straight", turn: turn, position: current_point, rotation:  CGFloat.pi/2, gameScene: gameScene)
                 current_point.x = current_point.x-bloc_size
                 road_direction = "w"
             case "b":
-                plot_road(imageNamed: "tarmac_straight", position: current_point, rotation:  CGFloat.pi/2, gameScene: gameScene, bridge: true)
+                plot_road(imageNamed: "tarmac_straight", turn: turn, position: current_point, rotation:  CGFloat.pi/2, gameScene: gameScene)
                 self.bridges.append((current_point,false))
                 current_point.x = current_point.x-bloc_size
                 road_direction = "w"
             case "r":
-                plot_road(imageNamed: "tarmac_right", position: current_point, rotation: CGFloat.pi/2, gameScene: gameScene, bridge: false)
+                plot_road(imageNamed: "tarmac_right", turn: turn, position: current_point, rotation: CGFloat.pi/2, gameScene: gameScene)
                 current_point.y = current_point.y+bloc_size
                 road_direction = "n"
             case "l":
-                plot_road(imageNamed: "tarmac_left", position: current_point, rotation: CGFloat.pi/2, gameScene: gameScene, bridge: false)
+                plot_road(imageNamed: "tarmac_left", turn: turn, position: current_point, rotation: CGFloat.pi/2, gameScene: gameScene)
                 current_point.y = current_point.y-bloc_size
                 road_direction = "s"
             default:
